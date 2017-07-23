@@ -48,4 +48,15 @@ class CurrentWeather {
         }
         return _currentTemp
     }
+    
+    func downloadWeatherDetails(completed: @escaping DownloadComplete){
+        //Alamofire download
+        let curretWeatherURL = URL(string: CURRENT_WEATHER_URL)
+        Alamofire.request(curretWeatherURL!).responseJSON { response in
+            let result = response.result
+            print("DILYAN: \(response)")
+            
+        }
+        completed()
+    }
 }
