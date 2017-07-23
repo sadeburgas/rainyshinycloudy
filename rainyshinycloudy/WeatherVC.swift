@@ -23,6 +23,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        print("DILYAN: weather URL is \(CURRENT_WEATHER_URL)")
        
     }
     
