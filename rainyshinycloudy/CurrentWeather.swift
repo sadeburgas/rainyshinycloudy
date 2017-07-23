@@ -56,6 +56,32 @@ class CurrentWeather {
             let result = response.result
             print("DILYAN: \(response)")
             
+            if let dict = result.value as? Dictionary<String, Any> {
+                
+                if let name = dict["name"] as? String{
+                    self._cityName = name.capitalized
+                    print("DILYAN: THE NAME OF CITY\(self._cityName)")
+                }
+                
+                if let weather = dict["weather"] as? [Dictionary<String, Any>] {
+                    if let main = weather[0]["main"] as? String {
+                        self._weatherType = main.capitalized
+                        print("DILYAN: THE WEATHER IS \(self._weatherType)")
+                    }
+                }
+                
+                if let main = dict["main"] as? Dictionary<String, Any> {
+                    if let currentTemperature = main["temp"] as? Double {
+                        let kelvinToCelsius = round(currentTemperature - 273.15)
+                        self._currentTemp = kelvinToCelsius
+                        print("DILYAN: current temp is\(self._currentTemp)")
+                    }
+                }
+                
+            }
+            
+            
+            
         }
         completed()
     }
