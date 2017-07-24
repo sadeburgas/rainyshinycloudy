@@ -83,7 +83,7 @@
                                 <rect key="frame" x="0.0" y="300" width="320" height="268"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="weatherCell" rowHeight="80" id="P6d-UZ-nfI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="weatherCell" rowHeight="80" id="P6d-UZ-nfI" customClass="WeatherCell" customModule="rainyshinycloudy" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P6d-UZ-nfI" id="qGP-uX-mby">
@@ -149,6 +149,13 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="dayLabel" destination="PzD-2T-PgL" id="wrz-dR-03f"/>
+                                            <outlet property="highTemp" destination="HhZ-oS-TYd" id="mle-Av-2gZ"/>
+                                            <outlet property="lowTemp" destination="TG2-1J-nDa" id="ntI-XA-ueC"/>
+                                            <outlet property="weatherIcon" destination="S76-HO-yJN" id="bVG-jo-4rB"/>
+                                            <outlet property="weatherType" destination="Jjl-rF-Pz3" id="HPX-RJ-hPz"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
