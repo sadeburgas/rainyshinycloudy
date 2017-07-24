@@ -15,7 +15,7 @@ class CurrentWeather {
     var _weatherType: String!
     var _currentTemp: Double!
     
-    var cityName:String {
+    var cityName: String {
         if _cityName == nil {
             _cityName = ""
         }
@@ -50,9 +50,11 @@ class CurrentWeather {
     }
     
     func downloadWeatherDetails(completed: @escaping DownloadComplete){
+        
         //Alamofire download
         let curretWeatherURL = URL(string: CURRENT_WEATHER_URL)
         Alamofire.request(curretWeatherURL!).responseJSON { response in
+            
             let result = response.result
             print("DILYAN: \(response)")
             
@@ -60,29 +62,28 @@ class CurrentWeather {
                 
                 if let name = dict["name"] as? String{
                     self._cityName = name.capitalized
-                    print("DILYAN: THE NAME OF CITY\(self._cityName)")
+                    print("DILYAN: The name of city : \(self._cityName)")
                 }
                 
                 if let weather = dict["weather"] as? [Dictionary<String, Any>] {
                     if let main = weather[0]["main"] as? String {
                         self._weatherType = main.capitalized
-                        print("DILYAN: THE WEATHER IS \(self._weatherType)")
+                        print("DILYAN: The weather is : \(self._weatherType)")
                     }
                 }
                 
                 if let main = dict["main"] as? Dictionary<String, Any> {
+                    
                     if let currentTemperature = main["temp"] as? Double {
                         let kelvinToCelsius = round(currentTemperature - 273.15)
                         self._currentTemp = kelvinToCelsius
-                        print("DILYAN: current temp is\(self._currentTemp)")
+                        print("DILYAN: current temp is : \(self._currentTemp)")
                     }
                 }
                 
             }
-            
-            
-            
+           completed()
         }
-        completed()
+        
     }
 }

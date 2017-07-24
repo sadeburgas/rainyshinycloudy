@@ -109,10 +109,10 @@
 			isa = PBXGroup;
 			children = (
 				1C5F8C1D1F244AAD004CF7B3 /* Utils */,
-				1C5F8C1A1F24486D004CF7B3 /* Models */,
-				1C5F8C181F244857004CF7B3 /* Controller */,
-				1C5F8C191F244864004CF7B3 /* View */,
 				1C5F8C1B1F24494F004CF7B3 /* Resources */,
+				1C5F8C1A1F24486D004CF7B3 /* Models */,
+				1C5F8C191F244864004CF7B3 /* View */,
+				1C5F8C181F244857004CF7B3 /* Controller */,
 			);
 			path = rainyshinycloudy;
 			sourceTree = "<group>";
