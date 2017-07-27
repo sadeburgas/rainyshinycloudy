@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreLocation
 import Alamofire
 
-class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
@@ -17,6 +18,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var currentWeatherImage: UIImageView!
     @IBOutlet weak var currentWeatherTypeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
     
     var currentWeather: CurrentWeather!
     var forecast: Forecast!
@@ -26,30 +30,60 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("DILYAN: weather URL is \(CURRENT_WEATHER_URL)")
+        //print("DILYAN: weather URL is \(CURRENT_WEATHER_URL)")
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startMonitoringSignificantLocationChanges()
         
         tableView.delegate = self
         tableView.dataSource = self
         
+     //   print("DILYAN: weather URL is \(CURRENT_WEATHER_URL)")
+        
         currentWeather = CurrentWeather()
         
-        
-        
-        currentWeather.downloadWeatherDetails {
-            //Setup load dato for UI
-            self.downloadForecastData {
-                self.updateMainUI()
-            }
+//        currentWeather.downloadWeatherDetails {
+//            //Setup load dato for UI
+//            self.downloadForecastData {
+//                self.updateMainUI()
+//            }
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        locationAuthStatus()
+    }
+    
+    func locationAuthStatus(){
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            currentLocation = locationManager.location
+            Location.sharedInstance.latitute = currentLocation.coordinate.latitude
+            Location.sharedInstance.longitude = currentLocation.coordinate.longitude
             
+            print("Dilyan coordinate(lat, long) \(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude)")
+            print("DILYAN: weather URL is \(CURRENT_WEATHER_URL)")
+            
+            currentWeather.downloadWeatherDetails {
+                //Setup load dato for UI
+                self.downloadForecastData {
+                    self.updateMainUI()
+                }
+            }
+
+            
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+            locationAuthStatus()
         }
-        
-       
     }
     
     func downloadForecastData(completed: @escaping DownloadComplete){
         //Download Forecast data for TableView
         
-        let forcastURL = URL(string: FORCAST_URL)
+        let forcastURL = URL(string: FORECAST_URL)
         Alamofire.request(forcastURL!).responseJSON {responce in
             let result = responce.result
             
